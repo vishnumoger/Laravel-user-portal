@@ -1,66 +1,54 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+THE TEST
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Introduction
 
-## About Laravel
+We want to create a portal where users can log in, reset password, sign up and update profile.
+What we’ll need from you, is to create the API’s that will enable these features.
+While building this out, we’ll also need you to think about how you’ll pipe these requests to our
+Analytics, Messaging & Monitoring platforms i.e. Google Analytics, New Relic, DataDog, ...
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Requirements
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+A user account will include a name, email, password, phone number and billing address.
+Help us create 4 endpoints -
+1. Signup
+a. Include name, email and password and returns signed JWT token
+b. Validations
+i. Validate if the email has been registered before
+c. Send to Messaging platform with the payload after signup:
+i. User attributes: email, current timestamp, user id
+ii. Event name: Sign Up
+d. Send a welcome mailer.
+2. Login
+a. Accept email and password, and return a JWT token
+b. Send to Segment with the payload after login:
+i. User attributes: Email, current timestamp, user id.
+ii. Event name: Login
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+3. Password reset
+a. Only logged in users can perform this update.
+b. Accept current password and new password
+c. Send to Analytics platform with the payload after reset:
+i. User attributes: Email, current timestamp, user id
+ii. Event name: Password Reset
 
-## Learning Laravel
+d. Send an email for notifying password has been changed
+4. Update account details
+a. Only logged in user can perform this update
+b. Accept name, phone number, address
+c. Send to Segment with payload after update:
+i. User attributes: email, current timestamp, user id
+ii. Event name: Account Updated
+d. Send to Klaviyo with payload after update:
+i. User attributes: fields that have been updated. Eg: if only name has been
+updated, then send name only
+ii. Event name: Account Updated
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+How To:
+1. Create your implementation using Laravel (at least version 8) with best practices and OOP
+in mind.
+2. Use Laravel Event for analytics, observability and messaging services.
+3. For analytics, observability and messaging tools, feel free to log it in Laravel logs; we won’t
+need you to integrate it for real.
+4. Google Analytics payload needs to be JSON format.
+5. Please create a repo and share with us during submission
